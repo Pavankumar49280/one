@@ -33,3 +33,12 @@ steps:
 - task: SonarQubePublish@8
   inputs:
     pollingTimeoutSec: '300'
+
+- task: TomcatDeployment@1
+  inputs:
+    TomcatUrl: 'http://20.84.112.114:8080/'
+    Username: 'tomcat'
+    Password: 'admin@123'
+    Warfile: 'target/myweb-8.7.3.war'
+    Context: 'webapp'
+    ServerVersion: '7OrAbove'
