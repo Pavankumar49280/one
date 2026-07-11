@@ -24,6 +24,18 @@
 		</dependency>
 
 	</dependencies>
+	<repositories>
+	<repository>
+  <id>my-feed</id>
+  <url>https://pkgs.dev.azure.com/guntreddipavan49/_packaging/my-feed/maven/v1</url>
+  <releases>
+    <enabled>true</enabled>
+  </releases>
+  <snapshots>
+    <enabled>true</enabled>
+  </snapshots>
+</repository>
+	</repositories>
 	
 	<distributionManagement>
 		 <snapshotRepository>
