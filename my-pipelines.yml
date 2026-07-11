@@ -6,13 +6,34 @@ pool:
   name: new-pool
 
 steps:
+- task: SonarQubePrepare@8
+  inputs:
+    SonarQube: 'sonar-connection'
+    scannerMode: 'other'
+    extraProperties: |
+      # Additional properties that will be passed to the scanner,
+      # Put one key=value per line, example:
+      # sonar.exclusions=**/*.bin
+      sonar.projectKey=myproject
+- task: JavaToolInstaller@1
+  inputs:
+    versionSpec: '8'
+    jdkArchitectureOption: 'x64'
+    jdkSourceOption: 'PreInstalled'
+
 - task: Maven@4
   inputs:
     mavenPomFile: 'pom.xml'
+    goals: 'mvn package'
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
+    codeCoverageToolOption: 'JaCoCo'
     javaHomeOption: 'JDKVersion'
     mavenVersionOption: 'Default'
     mavenAuthenticateFeed: false
     effectivePomSkip: false
-    sonarQubeRunAnalysis: false
+    sonarQubeRunAnalysis: true
+    sqMavenPluginVersionChoice: 'latest'
+- task: SonarQubePublish@8
+  inputs:
+    pollingTimeoutSec: '300'
