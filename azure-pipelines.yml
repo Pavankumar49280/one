@@ -1,13 +1,15 @@
+
 trigger:
-- master
+- main
 
 pool:
-  name: my-pool
+ name: my-pool1
 
 steps:
 - task: Maven@4
   inputs:
     mavenPomFile: 'pom.xml'
+    goals: 'clean package'
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     javaHomeOption: 'JDKVersion'
@@ -15,12 +17,3 @@ steps:
     mavenAuthenticateFeed: false
     effectivePomSkip: false
     sonarQubeRunAnalysis: false
-
-- task: TomcatDeployment@1
-  inputs:
-    TomcatUrl: '$(url)'
-    Username: '$(username)'
-    Password: '$(password)'
-    Warfile: 'target/myweb-8.7.3.war'
-    Context: '/my-app'
-    ServerVersion: '7OrAbove'
