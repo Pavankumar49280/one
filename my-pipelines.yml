@@ -40,5 +40,5 @@ steps:
     Username: 'tomcat'
     Password: 'admin@123'
     Warfile: 'target/myweb-8.7.3.war'
-    Context: 'webapp'
+    Context: '/webapp'
     ServerVersion: '7OrAbove'
