@@ -15,9 +15,10 @@ steps:
       # Put one key=value per line, example:
       # sonar.exclusions=**/*.bin
       sonar.projectKey=myproject
+
 - task: JavaToolInstaller@1
   inputs:
-    versionSpec: '8'
+    versionSpec: '11'
     jdkArchitectureOption: 'x64'
     jdkSourceOption: 'PreInstalled'
 
