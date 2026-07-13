@@ -5,17 +5,30 @@ trigger:
 pool:
   name: pool-name 
 steps:
-
+- task: SonarQubePrepare@8
+  inputs:
+    SonarQube: 'sonar-connection'
+    scannerMode: 'other'
+    extraProperties: |
+      # Additional properties that will be passed to the scanner,
+      # Put one key=value per line, example:
+      # sonar.exclusions=**/*.bin
+      sonar.projectKey=myproject
 - task: Maven@4
   inputs:
     mavenPomFile: 'pom.xml'
-    goals: 'clean package'
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
+    codeCoverageToolOption: 'JaCoCo'
     javaHomeOption: 'JDKVersion'
+    jdkDirectory: 'usr/lib/jvm/java-17-openjdk-amd64'
     mavenVersionOption: 'Default'
     mavenAuthenticateFeed: false
     effectivePomSkip: false
-    sonarQubeRunAnalysis: false
+    sonarQubeRunAnalysis: true
+    sqMavenPluginVersionChoice: 'latest'
+- task: SonarQubePublish@8
+  inputs:
+    pollingTimeoutSec: '300'
 
 
